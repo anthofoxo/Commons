@@ -1,5 +1,8 @@
 package cc.antho.common;
 
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
@@ -81,13 +84,14 @@ public final class Util {
 		BufferedImage image = ImageIO.read(stream);
 		image.flush();
 
-		if (flip) flip(image);
+		if (flip) image = flipVertical(image);
 
 		return image;
 
 	}
 
 	// https://stackoverflow.com/a/23457861/10830440
+	@Deprecated
 	public static void flip(BufferedImage image) {
 
 		for (int i = 0; i < image.getWidth(); i++)
@@ -98,6 +102,27 @@ public final class Util {
 				image.setRGB(i, image.getHeight() - j - 1, tmp);
 
 			}
+
+	}
+
+	public static BufferedImage emptyCopy(BufferedImage src, int type) {
+
+		return new BufferedImage(src.getWidth(), src.getHeight(), type);
+
+	}
+
+	// https://examples.javacodegeeks.com/desktop-java/awt/image/flipping-a-buffered-image/
+	public static BufferedImage flipVertical(BufferedImage src) {
+
+		BufferedImage dst = emptyCopy(src, BufferedImage.TYPE_INT_ARGB);
+
+		AffineTransform tx = AffineTransform.getScaleInstance(1f, -1f);
+		tx.translate(0, -src.getHeight());
+
+		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+		src = op.filter(src, dst);
+
+		return dst;
 
 	}
 
