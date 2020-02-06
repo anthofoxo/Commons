@@ -1,4 +1,4 @@
-package cc.antho.common;
+package cc.antho.common.math;
 
 /**
  * An implentation of OpenSimplexNoise in java.

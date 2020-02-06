@@ -1,6 +1,5 @@
 package cc.antho.common;
 
-import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -59,8 +58,7 @@ public final class Util {
 		final byte[] tmp = new byte[BLOCK_READ_SIZE];
 		int len;
 
-		while ((len = stream.read(tmp)) != -1)
-			os.write(tmp, 0, len);
+		while ((len = stream.read(tmp)) != -1) os.write(tmp, 0, len);
 
 		return os.toByteArray();
 
@@ -94,14 +92,13 @@ public final class Util {
 	@Deprecated
 	public static void flip(BufferedImage image) {
 
-		for (int i = 0; i < image.getWidth(); i++)
-			for (int j = 0; j < image.getHeight() / 2; j++) {
+		for (int i = 0; i < image.getWidth(); i++) for (int j = 0; j < image.getHeight() / 2; j++) {
 
-				int tmp = image.getRGB(i, j);
-				image.setRGB(i, j, image.getRGB(i, image.getHeight() - j - 1));
-				image.setRGB(i, image.getHeight() - j - 1, tmp);
+			int tmp = image.getRGB(i, j);
+			image.setRGB(i, j, image.getRGB(i, image.getHeight() - j - 1));
+			image.setRGB(i, image.getHeight() - j - 1, tmp);
 
-			}
+		}
 
 	}
 
@@ -128,8 +125,7 @@ public final class Util {
 
 	public static <T> boolean arrayContains(T[] array, T value) {
 
-		for (T t : array)
-			if (t.equals(value)) return true;
+		for (T t : array) if (t.equals(value)) return true;
 
 		return false;
 
@@ -154,8 +150,7 @@ public final class Util {
 
 			trace = e.getStackTrace();
 
-			for (StackTraceElement traceElement : trace)
-				s.append("\tat " + traceElement + "\n");
+			for (StackTraceElement traceElement : trace) s.append("\tat " + traceElement + "\n");
 
 		} while ((e = e.getCause()) != null);
 
